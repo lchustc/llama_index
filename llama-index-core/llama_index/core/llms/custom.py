@@ -29,7 +29,7 @@ class CustomLLM(LLM):
     @llm_chat_callback()
     def chat(self, messages: Sequence[ChatMessage], **kwargs: Any) -> ChatResponse:
         prompt = self.messages_to_prompt(messages)
-        completion_response = self.complete(prompt, formatted=True, **kwargs)
+        completion_response = self.complete(prompt, messages=messages, formatted=True, **kwargs)
         return completion_response_to_chat_response(completion_response)
 
     @llm_chat_callback()
@@ -37,7 +37,7 @@ class CustomLLM(LLM):
         self, messages: Sequence[ChatMessage], **kwargs: Any
     ) -> ChatResponseGen:
         prompt = self.messages_to_prompt(messages)
-        completion_response_gen = self.stream_complete(prompt, formatted=True, **kwargs)
+        completion_response_gen = self.stream_complete(prompt, messages=messages, formatted=True, **kwargs)
         return stream_completion_response_to_chat_response(completion_response_gen)
 
     @llm_chat_callback()
